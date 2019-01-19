@@ -1,0 +1,203 @@
+
+// Text overflow
+// Requires inline-block or block for proper styling
+.text-overflow() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// Clearfix
+//
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the
+//    contenteditable attribute is included anywhere else in the document.
+//    Otherwise it causes space to appear at the top and bottom of elements
+//    that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using
+//    `:before` to contain the top-margins of child elements.
+//
+// Source: http://nicolasgallagher.com/micro-clearfix-hack/
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+.generator() {
+  position: relative;
+  &:before, &:after {
+    position: absolute;
+    content: "";
+  }
+}
+
+.opacity(@opacity) {
+  opacity: @opacity;
+  // IE8 filter
+  @opacity-ie: (@opacity * 100);
+  filter: ~"alpha(opacity=@{opacity-ie})";
+}
+
+.size(@width: 0, @height:@width) {
+  width: @width;
+  height: @height;
+}
+
+.full(@pos: absolute) {
+  position: @pos;
+  top: 0; right: 0; bottom: 0; left: 0;
+}
+
+.pos(@pos: absolute, @top: 0, @left: @top) {
+  position: @pos;
+  top: @top; left: @top;
+}
+
+.heights(@height) {
+  height: @height;
+  line-height: @height;
+}
+
+.horizontal-margin(@left: auto, @right: @left) {
+  margin-left: @left;
+  margin-right: @right;
+}
+.vertical-margin(@top, @bot: @top) {
+  margin-top: @top;
+  margin-bottom: @bot;
+}
+.horizontal-padding(@left, @right: @left) {
+  padding-left: @left;
+  padding-right: @right;
+}
+.vertical-padding(@top, @bot: @top) {
+  padding-top: @top;
+  padding-bottom: @bot;
+}
+.vertical-border(@color, @width: 1px, @style: solid) {
+  border-top: @arguments;
+  border-bottom: @arguments;
+}
+.horizontal-border(@color, @width: 1px, @style: solid) {
+  border-left: @arguments;
+  border-right: @arguments;
+}
+
+// Variables
+// http://jade-lang.com/
+@brand-primary: #00a86b;
+@brand-highlight: #ff6000;
+// http://fontfamily.io/
+// Lucida Grande, Lucida Sans Unicode, Hiragino Sans GB
+// Lato
+@font-family-sans-serif: Avenir, Helvetica Neue, Hiragino Sans GB, Microsoft Yahei, sans-serif;
+@text-color: #2a2a21; //#434343;
+
+@font-face {
+  font-family: "Avenir";
+  src: local("Avenir"), url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/273445/Avenir.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+// reset
+html { box-sizing: border-box; min-width: 320px; }
+*, *:before, *:after { box-sizing: inherit; }
+a { color: inherit; text-decoration: none; }
+img { vertical-align: middle; max-width: 100%; }
+ul, ol, dl, dd { margin: 0; padding: 0; }
+ul { list-style-type: none; }
+ul, ol { list-style-position: inside; }
+input[type=text], input[type=password], input[type=number], input[type=tel] {
+  // reset padding
+}
+textarea { max-width: 100%; }
+var { font-style: normal; }
+h2 { font-weight: 100; } // set font-weight to normal
+input, textarea, keygen, select, button {
+  // font-family, .etc
+}
+
+// Helpers
+.clearfix { .clearfix(); }
+.pull-left { float: left; }
+.pull-right { float: right; }
+.text-overflow { .text-overflow(); }
+.text-center { text-align: center; }
+.text-primary { color: @brand-primary; }
+.text-muted { color: #777; }
+.text-success {}
+.text-danger {}
+.text-warning {}
+
+.caret {
+  @size: 4px;
+  display: inline-block; .size(0); vertical-align: middle;
+  border-top: @size solid;
+  .horizontal-border(transparent, @size, solid);
+}
+.angle {
+  @width: 1px;
+  @size: .5em;
+  display: inline-block; .size(@size);
+  vertical-align: middle;
+  border-width: @width @width 0 0;
+  border-style: solid;
+  transform: rotate(45deg);
+
+  &-down {
+    transition: .3s all ease;
+
+    // 1.4142/4 * @size
+    transform: rotate(135deg) translate(0, 1.4142/4 * @size);
+  }
+}
+.angle-down.open, #angle_demo:hover .angle-down {
+  //transform: translate(0, 0.35355*.5em) rotate(-45deg);
+}
+
+//
+html { font: 62.5%/1.5 @font-family-sans-serif; color: @text-color; }
+body { font-size: 1.6rem; }
+
+.heighter { line-height: 1.8; }
+
+// TODO:
+// loading, empty table
+// confirm, flash, tip
+// modal
+// form (input, select, button)
+.btn {
+  &:disabled, &.disabled {
+
+  }
+}
+.btn-primary {}
+.btn-danger {}
+// tabs
+// table (pagination)
+.table {
+  width: 100%;
+  table-layout: fixed; // enable text-overflow in cells.
+}
+// pager header, section
+//
+
+
+.container-sm {
+  max-width: 768px;
+  .horizontal-padding(15px);
+  .horizontal-margin(auto);
+}
+.demo-row {
+  padding: 15px;
+  .horizontal-margin(-15px);
+  border-bottom: 1px dashed #ccc;
+}
+
+.list-unordered { list-style-type: disc; }
